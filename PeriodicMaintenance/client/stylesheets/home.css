@@ -1,0 +1,28 @@
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #00796b;
+    opacity:  0.8;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #00796b;
+   opacity:  0.8;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #00796b;
+   opacity:  0.8;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #00796b;
+   opacity:  0.8;
+}
+:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+  color:    #00796b;
+  opacity:  0.8;
+}
+
+.computerIcon {
+  color : #ef5350;
+}
+
+body {
+  background-color : #eceff1;
+}

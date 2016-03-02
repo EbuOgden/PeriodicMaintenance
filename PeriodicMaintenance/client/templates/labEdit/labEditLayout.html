@@ -1,0 +1,20 @@
+<template name="labEditLayout">
+
+  <nav>
+    <div class="nav-wrapper col s12 m9 l9">
+      {{#with lab}}
+      <a class="brand-logo center">{{labName}} Edit</a>
+      {{/with}}
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="/labs">Labs</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+      <div class="col s12 m9 l9">
+          {{> yield}}
+      </div>
+  </div>
+</template>

@@ -1,0 +1,191 @@
+<template name="labEdit">
+  <!-- <button id="send">send</button> -->
+      {{#if havePcSoftware}}
+      <div id="modalForSoftwares" class="modal">
+          <div class="modal-content">
+              {{#with pcName}}
+                  <h4>{{computerName}} Computer's Softwares</h4>
+              {{/with}}
+              <form id="formSoftwares">
+                  {{#if equal softwareCount 0}}
+
+                      <h6 class="center-align"> No Software Found Please Add at Least 1...</h6>
+                      <div class="row">
+                          <div class="input-field col s6 m6 l6">
+                              <input placeholder="Software 1" type="text" name="software1" class="validate">
+                              <input placeholder="Software 1 Maintenance Time" type="date" name="software1" class="validate datepicker">
+                          </div>
+                          <div class="input-field col s6 m6 l6 right">
+                              <input placeholder="Software 2" type="text" name="software2" class="validate">
+                              <input placeholder="Software 2 Maintenance Time" type="date" name="software2" class="validate datepicker">
+                          </div>
+                      </div>
+                  {{/if}}
+
+                  {{#if equal softwareCount 1}}
+                  {{#with software}}
+                      <div class="row">
+                        <div class="input-field col s6 m6 l6">
+                          <input placeholder="{{softwareName}}" type="text" name="software" class="validate" data-softwareId={{_id}}>
+                        </div>
+                        <div class="input-field col s6 m6 l6">
+                          <input placeholder="Maintenance Time {{periodTime}}" type="date" name="software" class="validate datepicker">
+                        </div>
+                      </div>
+                  {{/with}}
+
+                  {{else}}
+                  {{#each software}}
+                      <div class="row">
+                        <div class="input-field col s6 m6 l6">
+                          <input placeholder="{{softwareName}}" type="text" name="software" class="validate" data-softwareId={{_id}}>
+                        </div>
+                        <div class="input-field col s6 m6 l6">
+                          <input placeholder="Maintenance Time {{periodTime}}" type="date" name="software" class="validate datepicker">
+                        </div>
+                      </div>
+
+                  {{/each}}
+                  {{/if}}
+              </form>
+              <div class="modal-footer">
+                <a class=" modal-action modal-close btn-flat" id="modalSoftwareUpdate">Update</a>
+              </div>
+          </div>
+      </div>
+
+      <div class="input-field col s6">
+        {{#with lab}}
+          <input id="first_name" type="text" class="validate" placeholder="&nbsp;&nbsp;&nbsp;{{labName}}">
+        {{/with}}
+          <label for="first_name" class="active">Lab Name</label>
+      </div>
+      {{#if equal cinevisionCount 0}}
+      <h6 class="center-align"> No Cinevision Found...</h6>
+      <a id="cinevisionAdd" class="btn-floating red right" title="Add Cinevision"><i class="material-icons">add</i></a>
+          <div class="input-field col s6 m6 l6">
+            <div class="row">
+              <form id="cinevisionAddForm">
+                  <div class="col s6 m6 l6">
+                      <input name="cinevisionName" type="text" class="validate" placeholder="Add Cinevision Name">
+                  </div>
+                  <div class="col s5 m5 l5">
+                      <input name="cinevisionMaintenance" type="date" class="datepicker" placeholder="Cinevision Maintenance Time {{periodTime}}">
+                  </div>
+              </form>
+            </div>
+          </div>
+      {{/if}}
+
+      {{#if equal cinevisionCount 1}}
+      <a id="cinevisionAdd" class="btn-floating red right" title="Add Cinevision"><i class="material-icons">add</i></a>
+        {{#with cinevision}}
+        <div class="input-field col s6 m6 l6">
+          <div class="row">
+            <form id="cinevisionUpdateForm">
+                <div class="col s6 m6 l6">
+                    <input name="cinevisionName" type="text" class="validate" placeholder="{{cinevisionName}}">
+                </div>
+                <div class="col s5 m5 l5">
+                    <input name="cinevisionMaintenance" type="date" class="datepicker" placeholder="Cinevision Maintenance Time {{periodTime}}">
+                </div>
+            </form>
+          </div>
+        </div>
+        {{/with}}
+      {{/if}}
+
+      {{#if higher cinevisionCount 1}}
+        <a id="cinevisionAdd" class="btn-floating red right" title="Add Cinevision"><i class="material-icons">add</i></a>
+          {{#each cinevision}}
+          <div class="input-field col s6 m6 l6">
+            <div class="row">
+              <div class="col s6 m6 l6">
+                <input id="cinevisionCount" type="text" class="validate" placeholder="{{cinevisionName}}">
+              </div>
+              <div class="col s5 m5 l5">
+                <input id="cinevisionMaintenance" type="date" class="datepicker" placeholder="Cinevision Maintenance Time {{periodTime}}">
+              </div>
+            </div>
+          </div>
+          {{/each}}
+      {{/if}}
+    <form class="col s12 m9 l9" id="materialsForm" action="submit">
+      <div class="input-field col s6 m6 l6" id="computerSection">
+          {{#each computer}}
+              <button title="Softwares" class="btn deep-orange darken-1 right computerSoftwares" data-computerId={{_id}}>Softwares</button>
+              <input placeholder="{{computerName}}" type="text" name="computers" class="validate">
+          {{/each}}
+      </div>
+
+      <button id="submit" type="submit" class="btn right deep-orange darken-1">Update</button>
+
+    </form>
+
+{{/if}}
+
+
+      {{#if pcSoftProcess}}
+      <div class="row"></div>
+          <div class="row">
+              <a id="cinevisionAdd" title="Add Cinevision" class="btn-floating red right"><i class="material-icons">add</i></a>
+              <div class="col">
+              <i class="material-icons medium computerIcon">videocam</i>
+            </div>
+              <div class="col valign-wrapper"><h5 class="valign">Cinevision {{counter}}</h5></div>
+
+          </div>
+
+          <div class="row">
+
+              <form id="cinevisionForm">
+                  <div class="input-field col s6 m6 l6">
+                      <input name="cinevisionName" type="text" class="validate" placeholder="Name">
+                  </div>
+                  <div class="input-field col s6 m6 l6">
+                      <input name="cinevisionPeriod" type="text" class="validate dateJ" placeholder="Maintenance Time">
+                  </div>
+              </form>
+          </div>
+
+      <form id="materialsForm" action="submit">
+              <!--  -->
+
+              <div class="row">
+                <a id="computerAdd" title="Add Computer" class="btn-floating red right"><i class="material-icons">add</i></a>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                <i class="material-icons medium computerIcon">computer</i>
+              </div>
+                <div class="col valign-wrapper"><h5 class="valign">Computer {{counter}}</h5></div>
+              </div>
+
+              <div class="row">
+                  <div class="input-field col s6 m6 l6">
+                    <input placeholder="Name" type="text" name="computerName" class="validate ">
+                  </div>
+                  <div class="input-field col s6 m6 l6">
+                  <input placeholder="Maintenance Time" type="text" name="computersMaintenance" class="dateJ">
+                </div>
+              </div>
+              <div class="row">
+                  <div class="input-field col s6 m6 l6">
+                      <input placeholder="Software 1 Name" type="text" name="software1" class="validate">
+                      <input placeholder="Software 1 Maintenance Time" type="text" name="software1Period" class="validate dateJ">
+                  </div>
+                  <div class="input-field col s6 m6 l6 right">
+                      <input placeholder="Software 2 Name" type="text" name="software2" class="validate">
+                      <input placeholder="Software 2 Maintenance Time" type="text" name="software2Period" class="validate dateJ">
+                  </div>
+              </div>
+
+          </form>
+
+              <button id="submit" type="submit" class="btn right">Add</button>
+
+
+
+      {{/if}}
+</template>

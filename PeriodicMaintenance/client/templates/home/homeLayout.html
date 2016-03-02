@@ -1,0 +1,16 @@
+<template name="homeLayout">
+    <nav>
+      <div class="nav-wrapper">
+        <a class="brand-logo center">Home</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="/labs">Labs</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+        <div class="col s12 m9 l9">
+            {{> yield}}
+        </div>
+    </div>
+</template>

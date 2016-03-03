@@ -1,12 +1,5 @@
 <template name="labs">
-  <!-- <ul class="collapsible" data-collapsible="accordion">
-    {{#each labs}}
-        <li>
-       <div class="collapsible-header">{{labName}}<a href="" class="secondary-content"><i class="material-icons ">send</i></a></div>
-       <div class="collapsible-body">&nbsp;&nbsp;&nbsp;&nbsp;{{labName}} Infos :<p><i class="material-icons">power_settings_new</i>&nbsp;{{computerCount}}</p></div>
-     </li>
-    {{/each}}
-  </ul> -->
+  
     <ul class="collection z-depth-5">
       {{#each labs}}
           <li class="collection-item ">{{labName}}<a href="" class="secondary-content"><a href="/labEdit/{{_id}}"><i title="Edit" class="material-icons">settings</i></a><a href="/labView/{{_id}}"><i title="View" class="material-icons">view_module</i></a></a></li>

@@ -44,15 +44,7 @@ if(Meteor.isClient){
     })
 
     Template.labEdit.events({
-      // 'click #send' : function(e){
-      //   e.preventDefault();
-      //   Meteor.call('sendEmail',
-      //         'azmimengu@gmail.com',
-      //         'kekolasma@gmail.com',
-      //         'SA KANK',
-      //         'Bu maili kendi uygulamam uzerinden atiyorum eger maili aldiysan DUMAN YAK KANK AHAHHA ESPRILER FALAN SIKILDIM');
-      // },
-
+      
       'click #modalSoftwareUpdate' : function(e){
           e.preventDefault();
           var target = e.target;

@@ -1,6 +1,8 @@
 if(Meteor.isClient){
 
     Template.labEdit.rendered = function(){
+      Session.set('computerCounter', 1);
+      Session.set('cinevisionCounter', 1);
       lab = Router.current();
       labId = lab.params._id;
       computerCounter = 2;
@@ -15,8 +17,12 @@ if(Meteor.isClient){
         return Session.get('havePcSoftware');
       },
 
-      counter : function(){
-        return 1;
+      computerCounter : function(){
+        return Session.get('computerCounter');
+      },
+
+      cinevisionCounter : function(){
+        return Session.get('cinevisionCounter');
       },
 
       pcSoftProcess : function(){
@@ -46,34 +52,6 @@ if(Meteor.isClient){
       //         'SA KANK',
       //         'Bu maili kendi uygulamam uzerinden atiyorum eger maili aldiysan DUMAN YAK KANK AHAHHA ESPRILER FALAN SIKILDIM');
       // },
-
-      'click #computerAdd' : function(e){
-        e.preventDefault();
-        if(computerCounter > 25){
-            alert("Cannot add computer above 25");
-        }
-        else{
-            $('#materialsForm').append('<div class="row"><div class="col"><i class="material-icons medium computerIcon">computer</i></div><div class="col valign-wrapper"><h5 class="valign">Computer ' + computerCounter + '</h5></div></div><div class="row"><div class="input-field col s6 m6 l6"><input placeholder="Name" type="text" name="computers" class="validate"></div><div class="input-field col s6 m6 l6"><input placeholder="Maintenance Time" type="text" name="computersMaintenance" class="text dateJ"></div></div><div class="row"><div class="input-field col s6 m6 l6"><input placeholder="Software 1 Name" type="text" name="software1" class="validate"><input placeholder="Software 1 Maintenance Time" type="text" name="software1Period" class="validate dateJ"></div><div class="input-field col s6 m6 l6 right"><input placeholder="Software 2 Name" type="text" name="software2" class="validate"><input placeholder="Software 2 Maintenance Time" type="text" name="software2Period" class="validate dateJ"></div></div>');
-            $( ".dateJ" ).datepicker();
-            computerCounter++;
-        }
-
-
-      },
-
-      'click #cinevisionAdd' : function(e){
-          e.preventDefault();
-          if(cinevisionCounter > 5){
-            alert("Cannot add cinevision above 5");
-          }
-          else{
-            $('#cinevisionForm').append('<div class="row"><div class="col"><i class="material-icons medium computerIcon">videocam</i></div><div class="col valign-wrapper"><h5 class="valign">Cinevision ' + cinevisionCounter + '</h5></div></div><div class="input-field col s6 m6 l6"><input name="cinevisionName" type="text" class="validate" placeholder="Name"></div><div class="input-field col s6 m6 l6"><input name="cinevisionPeriod" type="text" class="validate dateJ" placeholder="Maintenance Time"></div>');
-            $( ".dateJ" ).datepicker();
-            cinevisionCounter++;
-
-          }
-
-      },
 
       'click #modalSoftwareUpdate' : function(e){
           e.preventDefault();
@@ -125,144 +103,108 @@ if(Meteor.isClient){
 
       },
 
-      'click #submit' : function(e, tmpl){
+      'click #cinevisionAdd' : function(e){
         e.preventDefault();
-
         lab = Router.current();
         labId = lab.params._id;
         var labchargehandName = Labs.findOne({_id : labId}).chargehandName;
         var labchargeAddress = Labs.findOne({_id : labId}).chargehandAddress;
-        var newComputerId = [];
-        var newSoftware1Id = [];
-        var newSoftware2Id = [];
         var cinevisionForm = document.getElementById('cinevisionForm');
         var cinevision = document.getElementById('cinevisionForm').elements['cinevisionName'];
-        var cinevisionCount = document.getElementById('cinevisionForm').elements['cinevisionName'].length;
         var cinevisionPeriod = document.getElementById('cinevisionForm').elements['cinevisionPeriod'];
+        if((!isEmpty(cinevision.value) && !isEmpty(cinevisionPeriod.value))){
+
+          Cinevisions.insert({
+            labId : labId,
+            cinevisionName : cinevision.value,
+            periodTime : cinevisionPeriod.value,
+            chargehandName : labchargehandName,
+            chargehandAddress : labchargeAddress
+          })
+          Session.set('cinevisionCounter', Session.get('cinevisionCounter') + 1);
+          cinevisionForm.reset();
+
+        }
+        else{
+          alert("Please Fill All Cinevision Boxes");
+        }
+
+
+
+      },
+
+      'click #computerAdd' : function(e, tmpl){
+        e.preventDefault();
+
+        lab = Router.current();
+        labId = lab.params._id;
+        var newComputerId;
+        var newSoftware1Id;
+        var newSoftware2Id;
+        var labchargehandName = Labs.findOne({_id : labId}).chargehandName;
+        var labchargeAddress = Labs.findOne({_id : labId}).chargehandAddress;
         var formComputer = document.getElementById('materialsForm').elements['computerName'];
-        var formComputerCount = document.getElementById('materialsForm').elements['computerName'].length;
+        var form = document.getElementById('materialsForm');
         var formComputerPeriod = document.getElementById('materialsForm').elements['computersMaintenance'];
-        var formComputerPeriodCounter = document.getElementById('materialsForm').elements['computersMaintenance'].length;
         var formSoftware1 = document.getElementById('materialsForm').elements['software1'];
         var formSoftware2 = document.getElementById('materialsForm').elements['software2'];
         var formSoftware1Period = document.getElementById('materialsForm').elements['software1Period'];
         var formSoftware2Period = document.getElementById('materialsForm').elements['software2Period'];
 
-        cinevisionCount = (cinevisionCount == undefined ? 1 : cinevisionCount);//if form have 1 element so doesnt have length attribute
-
-        formComputerCount = (formComputerCount == undefined ? 1 : formComputerCount);//if form have 1 element so doesnt have length attribute
-
-        formComputerPeriodCounter = (formComputerPeriodCounter == undefined ? 1 : formComputerPeriodCounter);//if form have 1 element so doesnt have length attribute
-
-        if(cinevisionCount == 1){
-          Cinevisions.insert({
-            labId : labId,
-            cinevisionName : cinevision.value,
-            cinevisionPeriod : cinevisionPeriod.value,
-            chargehandName : labchargehandName,
-            chargehandAddress : labchargeAddress
-          })
-        }
-
-        else{
-            for(var i = 0; i < cinevisionCount; i++){
-                if((!isEmpty(cinevision[i].value) && !isEmpty(cinevisionPeriod[i].value))){
-                    continue;
-                }
-
-                else{
-                  break;
-                }
-              }
-        }
-
-        if(i == cinevisionCount){
-          for(var i = 0; i < cinevisionCount; i++){
-            Cinevisions.insert({
-              labId : labId,
-              cinevisionName : cinevision[i].value,
-              cinevisionPeriod : cinevisionPeriod[i].value,
-              chargehandName : labchargehandName,
-              chargehandAddress : labchargeAddress
-            })
-          }
-          cinevisionForm.reset();
-          }
-          else{
-            alert("Please fill all boxes for " + (i + 1) + ". cinevision ");
-          }
-
-        return;
-
-        if(formComputerCount == 1){
-          if(!isEmpty(formComputer.value)){
+        if(((!isEmpty(formComputer.value) && !isEmpty(formComputerPeriod.value)))){
             newComputerId = Computers.insert({
               labId : labId,
               computerName : formComputer.value,
-              periodTime : formComputer
+              periodTime : formComputerPeriod.value,
+              chargehandName : labchargehandName,
+              chargehandAddress : labchargeAddress
             })
 
-            console.log(formComputer.value);
-
-            if(!isEmpty(formSoftware1.value)){
+            if((!isEmpty(formSoftware1.value) && !isEmpty(formSoftware1Period.value))){
               newSoftware1Id = Softwares.insert({
                 computerId : newComputerId,
-                softwareName : formSoftware1.value
-
+                softwareName : formSoftware1.value,
+                periodTime : formSoftware1Period.value,
+                chargehandName : labchargehandName,
+                chargehandAddress : labchargeAddress
               })
-              console.log(formSoftware1.value);
+              console.log(formSoftware1Period.value);
             }
 
-            if(!isEmpty(formSoftware2.value)){
+            if((!isEmpty(formSoftware2.value) && !isEmpty(formSoftware2Period.value))){
               newSoftware2Id = Softwares.insert({
                 computerId : newComputerId,
-                softwareName : formSoftware2.value
+                softwareName : formSoftware2.value,
+                periodTime : formSoftware2Period.value,
+                chargehandName : labchargehandName,
+                chargehandAddress : labchargeAddress
               })
-              console.log(formSoftware2.value);
+              console.log(formSoftware2Period.value);
             }
-
-          }
+          Session.set('computerCounter', Session.get('computerCounter') + 1);
+          form.reset();
         }
-
         else{
-          for(let i = 0; i < formComputerCount; i++){
-            if(!isEmpty(formComputer[i].value)){
-              newComputerId = Computers.insert({
-                labId : labId,
-                computerName : formComputer[i].value
-              })
-              if(!isEmpty(formSoftware1[i].value)){
-                newSoftware1Id = Softwares.insert({
-                  computerId : newComputerId,
-                  softwareName : formSoftware1[i].value
-
-                })
-                console.log(formSoftware1[i].value);
-              }
-
-              if(!isEmpty(formSoftware2[i].value)){
-                newSoftware2Id = Softwares.insert({
-                  computerId : newComputerId,
-                  softwareName : formSoftware2[i].value
-                })
-                console.log(formSoftware2[i].value);
-              }
-
-            }
-
-
-          }
+            alert("Please fill all boxes for Computer " + Session.get('computerCounter'));
         }
+      },
 
-
-        // Session.set('havePcSoftware', false);
-        // Session.set('pcSoftProcess', false);
-        // Session.set('periodProcess', true);
-        //
-        // for(let i = 0; i < newComputerId.length; i++){
-        //
-        // }
-
+      'click #finishAddMaterial' : function(e) {
+        e.preventDefault();
+        lab = Router.current();
+        labId = lab.params._id;
+        if(confirm("You are finishing material adding process. Are you sure ? ") == true){
+          Labs.update({
+            '_id' : labId
+          }, {
+            $set : {
+              materialAdded : true
+            }
+          })
+        }
+        else{
+          return;
+        }
       }
     })
 

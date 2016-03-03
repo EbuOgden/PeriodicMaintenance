@@ -2,14 +2,13 @@ LabEditController = RouteController.extend({
   template : 'labEdit',
 
   onBeforeAction: function(){
-    if(Computers.find({'labId' : this.params._id}).count() > 0){
-      /* TODO periodTime control */
-      console.log("onbefore computer control OK");
+    var lab = Meteor.wrapAsync(); /* sync */
+
+    if(Labs.findOne({'_id' : this.params._id}).materialAdded){
       Session.set('pcSoftProcess', false);
       Session.set('havePcSoftware', true);
     }
     else{
-      console.log("onbefore computer control not OK");
       Session.set('havePcSoftware', false);
       Session.set('pcSoftProcess', true);
     }
@@ -18,7 +17,6 @@ LabEditController = RouteController.extend({
     // computerList = Computers.find({labId : this.params._id}).map(function(element){
     //   return element._id;
     // });
-
 
     this.next();
   },
@@ -36,8 +34,6 @@ LabEditController = RouteController.extend({
    },
 
    action : function(){
-
-
      this.render();
    }
 })

@@ -29,6 +29,31 @@ Schema.Lab = new SimpleSchema({
     regEx : SimpleSchema.RegEx.Email
   },
 
+  materialAdded : {
+    type : Boolean,
+    optional : true,
+    autoValue : function(){
+      if(this.isInsert){
+        return false;
+      }
+    }
+  },
+
+  mailSended : {
+    type : Boolean,
+    optional : true,
+    autoValue : function(){
+      if(this.isInsert){
+        return false
+      }
+    }
+  },
+
+  mailSendTime : {
+    type : String,
+    optional : true
+  },
+
   createdAt : {
     type : Date,
     autoValue : function(){
@@ -54,8 +79,23 @@ Schema.Cinevision = new SimpleSchema({
   },
 
   periodTime : {
-    type : Date,
+    type : String,
     label : "Cinevision Maintenance Period",
+    optional : true
+  },
+
+  mailSended : {
+    type : Boolean,
+    optional : true,
+    autoValue : function(){
+      if(this.isInsert){
+        return false
+      }
+    }
+  },
+
+  mailSendTime : {
+    type : String,
     optional : true
   },
 
@@ -90,8 +130,23 @@ Schema.Computer = new SimpleSchema({
     },
 
     periodTime : {
-      type : Date,
+      type : String,
       label : "Computer Maintenance Period",
+      optional : true
+    },
+
+    mailSended : {
+      type : Boolean,
+      optional : true,
+      autoValue : function(){
+        if(this.isInsert){
+          return false
+        }
+      }
+    },
+
+    mailSendTime : {
+      type : String,
       optional : true
     },
 
@@ -127,8 +182,23 @@ Schema.Software = new SimpleSchema({
   },
 
   periodTime : {
-    type : Date,
+    type : String,
     label : "Software Maintenance Period",
+    optional : true
+  },
+
+  mailSended : {
+    type : Boolean,
+    optional : true,
+    autoValue : function(){
+      if(this.isInsert){
+        return false
+      }
+    }
+  },
+
+  mailSendTime : {
+    type : String,
     optional : true
   },
 

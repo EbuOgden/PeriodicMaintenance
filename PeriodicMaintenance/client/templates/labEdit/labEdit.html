@@ -60,6 +60,7 @@
         {{/with}}
           <label for="first_name" class="active">Lab Name</label>
       </div>
+
       {{#if equal cinevisionCount 0}}
       <h6 class="center-align"> No Cinevision Found...</h6>
       <a id="cinevisionAdd" class="btn-floating red right" title="Add Cinevision"><i class="material-icons">add</i></a>
@@ -110,15 +111,23 @@
           </div>
           {{/each}}
       {{/if}}
+
+    <div class="modal" id="modalforComputerAdd">
+      <div class="modal-content">
+      </div>
+    </div>
     <form class="col s12 m9 l9" id="materialsForm" action="submit">
       <div class="input-field col s6 m6 l6" id="computerSection">
+        <div class="row">
+        <a id="computerAddModal" title="Add Computer" class="btn-floating red right"><i class="material-icons">add</i></a>
+      </div>
           {{#each computer}}
               <button title="Softwares" class="btn deep-orange darken-1 right computerSoftwares" data-computerId={{_id}}>Softwares</button>
               <input placeholder="{{computerName}}" type="text" name="computers" class="validate">
           {{/each}}
       </div>
 
-      <button id="submit" type="submit" class="btn right deep-orange darken-1">Update</button>
+      <button id="updateLab" type="submit" class="btn right deep-orange darken-1">Update</button>
 
     </form>
 
@@ -132,7 +141,7 @@
               <div class="col">
               <i class="material-icons medium computerIcon">videocam</i>
             </div>
-              <div class="col valign-wrapper"><h5 class="valign">Cinevision {{counter}}</h5></div>
+              <div class="col valign-wrapper"><h5 class="valign">Cinevision {{cinevisionCounter}}</h5></div>
 
           </div>
 
@@ -159,7 +168,7 @@
                 <div class="col">
                 <i class="material-icons medium computerIcon">computer</i>
               </div>
-                <div class="col valign-wrapper"><h5 class="valign">Computer {{counter}}</h5></div>
+                <div class="col valign-wrapper"><h5 class="valign">Computer {{computerCounter}}</h5></div>
               </div>
 
               <div class="row">
@@ -183,7 +192,7 @@
 
           </form>
 
-              <button id="submit" type="submit" class="btn right">Add</button>
+              <button id="finishAddMaterial" type="submit" class="btn right">Finish</button>
 
 
 

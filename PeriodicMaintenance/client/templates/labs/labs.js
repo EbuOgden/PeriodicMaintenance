@@ -25,7 +25,7 @@ if(Meteor.isClient){
         var doc = this.insertDoc;
         var docId = this.docId;
         $('#labsAdd').closeModal();
-        Materialize.toast(doc.labName + " Added, Routing...", 2000);
+        Materialize.toast(doc.labName + " Added, Routing...", 1000);
         setTimeout(function(){
             Router.go('/labEdit/' + docId);
         }, 500);

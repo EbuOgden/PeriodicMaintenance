@@ -190,7 +190,7 @@ Meteor.startup(function(){
     }
 
 
-  }, 5000);
+  }, 15000); /* Can change server periodic control in ms */
 })
 
 Meteor.methods({
